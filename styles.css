@@ -1,0 +1,79 @@
+/* Comfort Mode. Each setting in effect is an attribute on the html tag, so these rules apply in any theme. */
+
+/* Text size scales the root font size, so everything sized in rem grows with it. */
+html[data-comfortmode-textsize="115"] {
+    font-size: 115%;
+}
+
+html[data-comfortmode-textsize="130"] {
+    font-size: 130%;
+}
+
+html[data-comfortmode-textsize="150"] {
+    font-size: 150%;
+}
+
+/* Easier reading: a plain typeface, more space, and shorter lines in the content. */
+html[data-comfortmode-easyread="1"] {
+    --bs-body-font-family: Verdana, Tahoma, "Segoe UI", sans-serif;
+    --bs-body-line-height: 1.75;
+}
+
+html[data-comfortmode-easyread="1"] body {
+    font-family: Verdana, Tahoma, "Segoe UI", sans-serif;
+    letter-spacing: .03em;
+    word-spacing: .12em;
+    line-height: 1.75;
+}
+
+html[data-comfortmode-easyread="1"] #region-main p,
+html[data-comfortmode-easyread="1"] #region-main .no-overflow li {
+    max-width: 70ch;
+}
+
+/* Reduce motion. Animations and transitions jump to their end state, so scripts that wait for them to end still run. */
+html[data-comfortmode-reducemotion="1"] *,
+html[data-comfortmode-reducemotion="1"] *::before,
+html[data-comfortmode-reducemotion="1"] *::after {
+    animation-duration: .01ms !important; /* stylelint-disable-line declaration-no-important */
+    animation-iteration-count: 1 !important; /* stylelint-disable-line declaration-no-important */
+    transition-duration: .01ms !important; /* stylelint-disable-line declaration-no-important */
+    scroll-behavior: auto !important; /* stylelint-disable-line declaration-no-important */
+}
+
+/* Focus mode hides the side panels, their toggles and the footer, and narrows the content column.
+   The drawer with the site menu on small screens stays: it is the only way to that menu there. */
+html[data-comfortmode-focus="1"] .drawer:not(.drawer-primary),
+html[data-comfortmode-focus="1"] .drawer-toggles,
+html[data-comfortmode-focus="1"] #page-footer {
+    display: none !important; /* stylelint-disable-line declaration-no-important */
+}
+
+html[data-comfortmode-focus="1"] #page.drawers,
+html[data-comfortmode-focus="1"] #page.drawers.show-drawer-left,
+html[data-comfortmode-focus="1"] #page.drawers.show-drawer-right {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+html[data-comfortmode-focus="1"] #topofscroll {
+    max-width: 60rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Focus mode in Classic and themes based on it, where the side panels are columns of blocks. */
+html[data-comfortmode-focus="1"] #page-content > .blockcolumn {
+    display: none !important; /* stylelint-disable-line declaration-no-important */
+}
+
+html[data-comfortmode-focus="1"] #page-content > .region-main {
+    flex: 0 0 100%;
+    max-width: 60rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
