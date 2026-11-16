@@ -35,9 +35,9 @@ html[data-comfortmode-easyread="1"] #region-main .no-overflow li {
 html[data-comfortmode-reducemotion="1"] *,
 html[data-comfortmode-reducemotion="1"] *::before,
 html[data-comfortmode-reducemotion="1"] *::after {
-    animation-duration: .01ms !important; /* stylelint-disable-line declaration-no-important */
+    animation-duration: .01ms !important; /* stylelint-disable-line declaration-no-important, time-min-milliseconds */
     animation-iteration-count: 1 !important; /* stylelint-disable-line declaration-no-important */
-    transition-duration: .01ms !important; /* stylelint-disable-line declaration-no-important */
+    transition-duration: .01ms !important; /* stylelint-disable-line declaration-no-important, time-min-milliseconds */
     scroll-behavior: auto !important; /* stylelint-disable-line declaration-no-important */
 }
 
