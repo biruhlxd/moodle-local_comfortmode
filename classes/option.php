@@ -167,11 +167,14 @@ final class option {
             return $this->default;
         }
         $user = $user ?? $USER;
-        if (!empty($user->id) && !isguestuser($user)) {
+        if (!options::is_visitor($user)) {
             $choice = get_user_preferences($this->preference(), null, $user);
-            if ($choice !== null && in_array((string) $choice, $this->choices, true)) {
-                return (string) $choice;
-            }
+        } else if (options::offered_to_visitors() && (int) ($user->id ?? 0) === (int) ($USER->id ?? 0)) {
+            // Only the visitor making this request has their choices here.
+            $choice = options::visitor_choices()[$this->preference()] ?? null;
+        }
+        if (isset($choice) && in_array((string) $choice, $this->choices, true)) {
+            return (string) $choice;
         }
         return $this->site_default();
     }

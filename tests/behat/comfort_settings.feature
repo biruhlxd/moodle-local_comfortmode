@@ -50,3 +50,28 @@ Feature: People choose their own comfort settings
     And I set the field "Text size" to "Standard"
     And I press "Save changes"
     And "html[data-comfortmode-textsize]" "css_element" should not exist
+
+  Scenario: A profile turns on its settings in one click
+    Given I log in as "student1"
+    And I visit "/local/comfortmode/index.php"
+    When I press "Low vision"
+    Then I should see "The Low vision settings are on."
+    And "html[data-comfortmode-textsize='150']" "css_element" should exist
+    And "html[data-comfortmode-font='hyperlegible']" "css_element" should exist
+    And "html[data-comfortmode-contrast='1']" "css_element" should exist
+
+  Scenario: A visitor who is not logged in chooses comfort settings
+    When I visit "/local/comfortmode/index.php"
+    Then I should see "Your choices are kept in this browser."
+    And I set the field "Typeface" to "OpenDyslexic, for dyslexia"
+    And I press "Save changes"
+    And "html[data-comfortmode-font='dyslexic']" "css_element" should exist
+    And I am on site homepage
+    And "html[data-comfortmode-font='dyslexic']" "css_element" should exist
+
+  Scenario: Visitors are sent to log in when the site does not offer them comfort settings
+    Given the following config values are set as admin:
+      | visitors | 0 | local_comfortmode |
+    When I visit "/local/comfortmode/index.php"
+    Then I should see "Log in"
+    And I should not see "Your choices are kept in this browser."

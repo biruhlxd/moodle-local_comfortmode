@@ -17,6 +17,7 @@
 namespace local_comfortmode;
 
 use core\hook\output\before_html_attributes;
+use core\hook\output\before_standard_footer_html_generation;
 use core_user\hook\extend_user_menu;
 
 /**
@@ -63,5 +64,20 @@ class hook_callbacks {
             'title' => $title,
             'titleidentifier' => 'pluginname,' . options::COMPONENT,
         ]);
+    }
+
+    /**
+     * A link to the Comfort Mode page in the footer, for visitors who have no user menu.
+     *
+     * @param before_standard_footer_html_generation $hook
+     */
+    public static function before_standard_footer_html_generation(before_standard_footer_html_generation $hook): void {
+        if (during_initial_install() || !options::is_visitor() || !options::offered_to_visitors() || !options::enabled()) {
+            return;
+        }
+        $hook->add_html(\html_writer::div(\html_writer::link(
+            new \core\url('/local/comfortmode/index.php'),
+            get_string('pluginname', options::COMPONENT)
+        ), 'local-comfortmode-footer'));
     }
 }

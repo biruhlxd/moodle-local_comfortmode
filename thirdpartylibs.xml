@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<libraries>
+    <library>
+        <location>fonts/atkinson-hyperlegible-400.woff2</location>
+        <name>Atkinson Hyperlegible</name>
+        <description>Typeface people can choose in Comfort Mode (latin subset, from Fontsource).</description>
+        <version>5.1.1</version>
+        <license>OFL</license>
+        <licenseversion>1.1</licenseversion>
+        <repository>https://github.com/fontsource/font-files/tree/main/fonts/google/atkinson-hyperlegible</repository>
+        <copyrights>
+            <copyright>Braille Institute of America, Inc.</copyright>
+        </copyrights>
+    </library>
+    <library>
+        <location>fonts/atkinson-hyperlegible-700.woff2</location>
+        <name>Atkinson Hyperlegible</name>
+        <description>Typeface people can choose in Comfort Mode (latin subset, from Fontsource).</description>
+        <version>5.1.1</version>
+        <license>OFL</license>
+        <licenseversion>1.1</licenseversion>
+        <repository>https://github.com/fontsource/font-files/tree/main/fonts/google/atkinson-hyperlegible</repository>
+        <copyrights>
+            <copyright>Braille Institute of America, Inc.</copyright>
+        </copyrights>
+    </library>
+    <library>
+        <location>fonts/opendyslexic-400.woff2</location>
+        <name>OpenDyslexic</name>
+        <description>Typeface people can choose in Comfort Mode (latin subset, from Fontsource).</description>
+        <version>5.1.0</version>
+        <license>OFL</license>
+        <licenseversion>1.1</licenseversion>
+        <repository>https://github.com/antijingoist/opendyslexic</repository>
+        <copyrights>
+            <copyright>Abbie Gonzalez</copyright>
+        </copyrights>
+    </library>
+    <library>
+        <location>fonts/opendyslexic-700.woff2</location>
+        <name>OpenDyslexic</name>
+        <description>Typeface people can choose in Comfort Mode (latin subset, from Fontsource).</description>
+        <version>5.1.0</version>
+        <license>OFL</license>
+        <licenseversion>1.1</licenseversion>
+        <repository>https://github.com/antijingoist/opendyslexic</repository>
+        <copyrights>
+            <copyright>Abbie Gonzalez</copyright>
+        </copyrights>
+    </library>
+</libraries>

@@ -38,13 +38,14 @@ final class options_test extends \advanced_testcase {
     }
 
     protected function tearDown(): void {
+        unset($_COOKIE[options::COOKIE]);
         options::reset();
         parent::tearDown();
     }
 
     public function test_nothing_is_set_by_default(): void {
         $this->setUser($this->getDataGenerator()->create_user());
-        $this->assertSame(['textsize', 'easyread', 'reducemotion', 'focus'], array_keys(options::all()));
+        $this->assertSame(['textsize', 'font', 'easyread', 'contrast', 'reducemotion', 'focus'], array_keys(options::all()));
         $this->assertSame([], options::html_attributes());
     }
 
@@ -98,7 +99,7 @@ final class options_test extends \advanced_testcase {
         set_config('enable_easyread', '0', 'local_comfortmode');
         set_config('enable_textsize', '0', 'local_comfortmode');
 
-        $this->assertSame(['reducemotion', 'focus'], array_keys(options::enabled()));
+        $this->assertSame(['font', 'contrast', 'reducemotion', 'focus'], array_keys(options::enabled()));
         $this->assertSame(['data-comfortmode-focus' => '1'], options::html_attributes());
 
         // Saving leaves it alone too.
@@ -130,7 +131,9 @@ final class options_test extends \advanced_testcase {
         $this->assertSame(
             [
                 'local_comfortmode_textsize',
+                'local_comfortmode_font',
                 'local_comfortmode_easyread',
+                'local_comfortmode_contrast',
                 'local_comfortmode_reducemotion',
                 'local_comfortmode_focus',
             ],
@@ -158,5 +161,75 @@ final class options_test extends \advanced_testcase {
         $this->assertSame('Your choice for "Text size" is "Large".', $exported->local_comfortmode_textsize->description);
         $this->assertSame('1', $exported->local_comfortmode_focus->value);
         $this->assertObjectNotHasProperty('local_comfortmode_easyread', $exported);
+    }
+
+    public function test_new_options_reach_the_html_tag(): void {
+        $this->setUser($this->getDataGenerator()->create_user());
+        options::save(['local_comfortmode_font' => 'dyslexic', 'local_comfortmode_contrast' => '1']);
+        $this->assertSame(
+            ['data-comfortmode-font' => 'dyslexic', 'data-comfortmode-contrast' => '1'],
+            options::html_attributes()
+        );
+        options::save(['local_comfortmode_font' => 'comicsans']);
+        $this->assertSame('dyslexic', get_user_preferences('local_comfortmode_font'));
+    }
+
+    public function test_a_profile_sets_its_values_and_leaves_the_others(): void {
+        $this->setUser($this->getDataGenerator()->create_user());
+        options::save(['local_comfortmode_focus' => '1']);
+        options::save(options::profile('lowvision'));
+        $this->assertSame([
+            'data-comfortmode-textsize' => '150',
+            'data-comfortmode-font' => 'hyperlegible',
+            'data-comfortmode-contrast' => '1',
+            'data-comfortmode-focus' => '1',
+        ], options::html_attributes());
+
+        // Options the site does not offer are left out of a profile.
+        set_config('enable_font', '0', 'local_comfortmode');
+        options::reset();
+        $this->assertSame(
+            ['local_comfortmode_easyread' => '1', 'local_comfortmode_textsize' => '115'],
+            options::profile('dyslexia')
+        );
+        $this->assertSame([], options::profile('nosuchprofile'));
+    }
+
+    public function test_visitors_choices_are_kept_in_their_cookie(): void {
+        $this->setUser(null);
+        options::save(['local_comfortmode_textsize' => '130', 'local_comfortmode_contrast' => '1']);
+        $this->assertSame('local_comfortmode_textsize=130&local_comfortmode_contrast=1', $_COOKIE[options::COOKIE]);
+        $this->assertSame(
+            ['data-comfortmode-textsize' => '130', 'data-comfortmode-contrast' => '1'],
+            options::html_attributes()
+        );
+
+        // A later choice adds to the earlier ones; a bad value in the cookie is ignored.
+        options::save(['local_comfortmode_focus' => '1']);
+        $this->assertCount(3, options::visitor_choices());
+        $_COOKIE[options::COOKIE] .= '&local_comfortmode_font=comicsans';
+        $this->assertArrayNotHasKey('data-comfortmode-font', options::html_attributes());
+
+        // A guest is a visitor too, and the reset removes the cookie.
+        $this->setGuestUser();
+        $this->assertSame('1', options::html_attributes()['data-comfortmode-focus']);
+        options::reset_user();
+        $this->assertArrayNotHasKey(options::COOKIE, $_COOKIE);
+        $this->assertSame([], options::html_attributes());
+    }
+
+    public function test_visitors_get_the_site_defaults_when_not_offered(): void {
+        set_config('visitors', '0', 'local_comfortmode');
+        set_config('default_textsize', '115', 'local_comfortmode');
+        $this->setUser(null);
+        $_COOKIE[options::COOKIE] = 'local_comfortmode_textsize=150';
+        $this->assertSame(['data-comfortmode-textsize' => '115'], options::html_attributes());
+        options::save(['local_comfortmode_focus' => '1']);
+        $this->assertSame('local_comfortmode_textsize=150', $_COOKIE[options::COOKIE]);
+
+        // A visitor's cookie never applies to a logged-in person.
+        set_config('visitors', '1', 'local_comfortmode');
+        $this->setUser($this->getDataGenerator()->create_user());
+        $this->assertSame(['data-comfortmode-textsize' => '115'], options::html_attributes());
     }
 }

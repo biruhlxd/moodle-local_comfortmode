@@ -30,6 +30,10 @@ $callbacks = [
         'callback' => [\local_comfortmode\hook_callbacks::class, 'before_html_attributes'],
     ],
     [
+        'hook' => \core\hook\output\before_standard_footer_html_generation::class,
+        'callback' => [\local_comfortmode\hook_callbacks::class, 'before_standard_footer_html_generation'],
+    ],
+    [
         'hook' => \core_user\hook\extend_user_menu::class,
         'callback' => [\local_comfortmode\hook_callbacks::class, 'extend_user_menu'],
     ],

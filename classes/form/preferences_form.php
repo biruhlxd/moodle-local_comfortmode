@@ -37,6 +37,27 @@ class preferences_form extends \moodleform {
     protected function definition(): void {
         $mform = $this->_form;
 
+        // One-click profiles, each a submit button that saves its values.
+        $profiles = [];
+        foreach (array_keys(options::PROFILES) as $profile) {
+            if (options::profile($profile)) {
+                $profiles[] = $mform->createElement(
+                    'submit',
+                    $profile,
+                    get_string('profile_' . $profile, options::COMPONENT),
+                    ['class' => 'btn-secondary']
+                );
+            }
+        }
+        if ($profiles) {
+            $mform->addElement('header', 'profilesheader', get_string('profiles', options::COMPONENT));
+            $mform->setExpanded('profilesheader');
+            $mform->addElement('static', 'profiles_desc', '', get_string('profiles_desc', options::COMPONENT));
+            $mform->addGroup($profiles, 'profiles', '', [' '], true);
+            $mform->addElement('header', 'ownheader', get_string('ownchoices', options::COMPONENT));
+            $mform->setExpanded('ownheader');
+        }
+
         foreach (options::enabled() as $option) {
             $name = $option->preference();
             if ($option->type === option::TYPE_TOGGLE) {
