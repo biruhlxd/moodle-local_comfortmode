@@ -28,6 +28,12 @@ if ($hassiteconfig) {
     $settings = new admin_settingpage('local_comfortmode', get_string('pluginname', 'local_comfortmode'));
     $ADMIN->add('localplugins', $settings);
     if ($ADMIN->fulltree) {
+        $settings->add(new admin_setting_configcheckbox(
+            'local_comfortmode/visitors',
+            get_string('setting_visitors', 'local_comfortmode'),
+            get_string('setting_visitors_desc', 'local_comfortmode'),
+            1
+        ));
         \local_comfortmode\options::add_admin_settings($settings, 'local_comfortmode');
     }
 }

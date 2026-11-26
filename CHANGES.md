@@ -1,5 +1,15 @@
 # Changes
 
+## 1.1.0 (2026-11-26)
+
+- Typeface: Atkinson Hyperlegible for low vision or OpenDyslexic for dyslexia, bundled with the plugin.
+- High contrast: black on white (white on black in dark mode), underlined links, stronger borders and focus ring. It also
+  overrules themes that colour text directly, such as Academi.
+- Quick start profiles: Dyslexia, Low vision and Concentration, each a set of settings in one click.
+- Visitors who are not logged in, and guests, can choose comfort settings too; their choices are kept in a cookie in their
+  browser. A link to the page is in the footer. New setting *Offer to visitors* (on by default).
+- Tested with Moove and Academi on Moodle 5.3.
+
 ## 1.0.0 (2026-11-15)
 
 First stable version.

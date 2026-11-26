@@ -31,6 +31,128 @@ html[data-comfortmode-easyread="1"] #region-main .no-overflow li {
     max-width: 70ch;
 }
 
+/* Typeface. The fonts ship with the plugin (fonts/, SIL Open Font License) and load only when chosen.
+   They come after easier reading, so a chosen typeface wins over its plain one. Every element takes it, except icons
+   and code, which keep their own font. */
+@font-face {
+    font-family: "Comfort Mode Atkinson Hyperlegible";
+    src: url([[font:local_comfortmode|atkinson-hyperlegible-400.woff2]]) format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Comfort Mode Atkinson Hyperlegible";
+    src: url([[font:local_comfortmode|atkinson-hyperlegible-700.woff2]]) format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Comfort Mode OpenDyslexic";
+    src: url([[font:local_comfortmode|opendyslexic-400.woff2]]) format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Comfort Mode OpenDyslexic";
+    src: url([[font:local_comfortmode|opendyslexic-700.woff2]]) format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+html[data-comfortmode-font="hyperlegible"] {
+    --bs-body-font-family: "Comfort Mode Atkinson Hyperlegible", Verdana, sans-serif;
+    --bs-font-sans-serif: "Comfort Mode Atkinson Hyperlegible", Verdana, sans-serif;
+}
+
+html[data-comfortmode-font="hyperlegible"] body,
+html[data-comfortmode-font="hyperlegible"] body *:not(.icon, .fa, [class*="fa-"], pre, code, kbd, samp) {
+    font-family: "Comfort Mode Atkinson Hyperlegible", Verdana, sans-serif;
+}
+
+html[data-comfortmode-font="dyslexic"] {
+    --bs-body-font-family: "Comfort Mode OpenDyslexic", Verdana, sans-serif;
+    --bs-font-sans-serif: "Comfort Mode OpenDyslexic", Verdana, sans-serif;
+}
+
+html[data-comfortmode-font="dyslexic"] body,
+html[data-comfortmode-font="dyslexic"] body *:not(.icon, .fa, [class*="fa-"], pre, code, kbd, samp) {
+    font-family: "Comfort Mode OpenDyslexic", Verdana, sans-serif;
+}
+
+/* OpenDyslexic is wide already, so easier reading adds no letter spacing to it. */
+html[data-comfortmode-font="dyslexic"][data-comfortmode-easyread="1"] body {
+    letter-spacing: normal;
+}
+
+/* High contrast: plain black on white (white on black when the site or person uses dark mode), borders that show,
+   underlined links and a focus ring that cannot be missed. */
+html[data-comfortmode-contrast="1"] {
+    --bs-body-color: #000;
+    --bs-body-bg: #fff;
+    --bs-emphasis-color: #000;
+    --bs-secondary-color: #000;
+    --bs-tertiary-color: #000;
+    --bs-border-color: #000;
+    --bs-link-color: #0037a0;
+    --bs-link-color-rgb: 0, 55, 160;
+    --bs-link-hover-color: #001f5c;
+    --bs-link-hover-color-rgb: 0, 31, 92;
+}
+
+html[data-comfortmode-contrast="1"][data-bs-theme="dark"] {
+    --bs-body-color: #fff;
+    --bs-body-bg: #000;
+    --bs-emphasis-color: #fff;
+    --bs-secondary-color: #fff;
+    --bs-tertiary-color: #fff;
+    --bs-border-color: #fff;
+    --bs-link-color: #ffe14d;
+    --bs-link-color-rgb: 255, 225, 77;
+    --bs-link-hover-color: #fff;
+    --bs-link-hover-color-rgb: 255, 255, 255;
+}
+
+/* Themes that colour text directly instead of through Bootstrap's variables, such as Academi, are overruled too.
+   Only in the page content, so text on a theme's own dark header or footer keeps its light colour. */
+html[data-comfortmode-contrast="1"] body {
+    color: var(--bs-body-color);
+}
+
+html[data-comfortmode-contrast="1"] :is(#region-main, [role="main"], #page-header)
+:is(p, li, dd, dt, td, th, label, legend, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6) {
+    color: var(--bs-body-color);
+}
+
+html[data-comfortmode-contrast="1"] :is(.text-muted, .text-secondary, .text-body-secondary, .dimmed_text, .form-text) {
+    color: var(--bs-body-color) !important; /* stylelint-disable-line declaration-no-important */
+}
+
+html[data-comfortmode-contrast="1"] a:not(.btn):not(.nav-link):not(.dropdown-item):not(.list-group-item) {
+    text-decoration: underline;
+}
+
+html[data-comfortmode-contrast="1"] :is(.card, .form-control, .form-select, .form-check-input, .list-group-item, .dropdown-menu) {
+    border-color: var(--bs-body-color);
+}
+
+html[data-comfortmode-contrast="1"] :focus-visible {
+    outline: 3px solid var(--bs-body-color) !important; /* stylelint-disable-line declaration-no-important */
+    outline-offset: 2px;
+    box-shadow: 0 0 0 6px #ffd400 !important; /* stylelint-disable-line declaration-no-important */
+}
+
+/* The link to this page in the footer, for visitors. */
+.local-comfortmode-footer {
+    margin: .5rem 0;
+}
+
 /* Reduce motion. Animations and transitions jump to their end state, so scripts that wait for them to end still run. */
 html[data-comfortmode-reducemotion="1"] *,
 html[data-comfortmode-reducemotion="1"] *::before,
