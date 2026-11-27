@@ -13,7 +13,7 @@ Lets every person choose how a Moodle site looks and feels for them. It works wi
 
 **Quick start** profiles turn on a set of settings in one click: *Dyslexia* (OpenDyslexic, easier reading, large text), *Low vision* (largest text, Atkinson Hyperlegible, high contrast) and *Concentration* (focus mode, reduced motion). Each setting can be changed afterwards.
 
-Choices are stored as user preferences, so they follow a person to every device they log in from. Visitors who are not logged in, and guests, can choose too, from a link in the footer: their choices are kept in a cookie in their own browser (`MoodleComfortMode`), and an administrator can switch this off.
+Choices are stored as user preferences, so they follow a person to every device they log in from. Visitors who are not logged in, and guests, can choose too, from a Comfort Mode button in the bottom corner of every page: their choices are kept in a cookie in their own browser (`MoodleComfortMode`), and an administrator can switch this off.
 
 ## Using it
 

@@ -61,7 +61,8 @@ Feature: People choose their own comfort settings
     And "html[data-comfortmode-contrast='1']" "css_element" should exist
 
   Scenario: A visitor who is not logged in chooses comfort settings
-    When I visit "/local/comfortmode/index.php"
+    Given I am on site homepage
+    When I click on ".local-comfortmode-footer a" "css_element"
     Then I should see "Your choices are kept in this browser."
     And I set the field "Typeface" to "OpenDyslexic, for dyslexia"
     And I press "Save changes"

@@ -69,4 +69,4 @@ $string['setting_default_desc'] = 'What people get until they choose for themsel
 $string['setting_enable'] = 'Offer "{$a}"';
 $string['setting_enable_desc'] = 'When ticked, people can choose this setting for themselves. When not ticked, it is hidden and has no effect.';
 $string['setting_visitors'] = 'Offer to visitors';
-$string['setting_visitors_desc'] = 'People who are not logged in, and guests, can choose comfort settings too, from a link in the footer. Their choices are kept in a cookie in their own browser (MoodleComfortMode), not on the site.';
+$string['setting_visitors_desc'] = 'People who are not logged in, and guests, can choose comfort settings too, from a Comfort Mode button in the bottom corner of every page. Their choices are kept in a cookie in their own browser (MoodleComfortMode), not on the site.';

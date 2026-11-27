@@ -148,9 +148,52 @@ html[data-comfortmode-contrast="1"] :focus-visible {
     box-shadow: 0 0 0 6px #ffd400 !important; /* stylelint-disable-line declaration-no-important */
 }
 
-/* The link to this page in the footer, for visitors. */
+/* The button to this page for visitors, in the bottom corner opposite Boost's "?" footer button. */
 .local-comfortmode-footer {
-    margin: .5rem 0;
+    position: fixed;
+    bottom: 2rem;
+    inset-inline-start: 2rem;
+    z-index: 1000;
+}
+
+.local-comfortmode-footer a {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem 1rem;
+    border: 1px solid var(--bs-border-color, #dee2e6);
+    border-radius: 2rem;
+    background-color: var(--bs-body-bg, #fff);
+    color: var(--bs-body-color, #1d2125);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .15);
+    font-size: .875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+}
+
+.local-comfortmode-footer a:hover,
+.local-comfortmode-footer a:focus {
+    background-color: var(--bs-tertiary-bg, #f8f9fa);
+    color: var(--bs-body-color, #1d2125);
+}
+
+.local-comfortmode-footer__icon {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1rem;
+}
+
+@media (max-width: 575.98px) {
+    .local-comfortmode-footer {
+        bottom: 1rem;
+        inset-inline-start: 1rem;
+    }
+}
+
+@media print {
+    .local-comfortmode-footer {
+        display: none;
+    }
 }
 
 /* Reduce motion. Animations and transitions jump to their end state, so scripts that wait for them to end still run. */

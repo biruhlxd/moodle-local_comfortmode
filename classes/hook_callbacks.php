@@ -17,7 +17,7 @@
 namespace local_comfortmode;
 
 use core\hook\output\before_html_attributes;
-use core\hook\output\before_standard_footer_html_generation;
+use core\hook\output\before_footer_html_generation;
 use core_user\hook\extend_user_menu;
 
 /**
@@ -67,17 +67,20 @@ class hook_callbacks {
     }
 
     /**
-     * A link to the Comfort Mode page in the footer, for visitors who have no user menu.
+     * A button to the Comfort Mode page, for visitors who have no user menu. It goes before the footer, not into the
+     * standard footer HTML, which Boost and its child themes hide behind the footer's "?" button, and styles.css fixes
+     * it to the bottom corner opposite that button, so it is in the same place in every theme.
      *
-     * @param before_standard_footer_html_generation $hook
+     * @param before_footer_html_generation $hook
      */
-    public static function before_standard_footer_html_generation(before_standard_footer_html_generation $hook): void {
+    public static function before_footer_html_generation(before_footer_html_generation $hook): void {
         if (during_initial_install() || !options::is_visitor() || !options::offered_to_visitors() || !options::enabled()) {
             return;
         }
         $hook->add_html(\html_writer::div(\html_writer::link(
             new \core\url('/local/comfortmode/index.php'),
-            get_string('pluginname', options::COMPONENT)
+            \html_writer::span('Aa', 'local-comfortmode-footer__icon', ['aria-hidden' => 'true']) .
+                get_string('pluginname', options::COMPONENT)
         ), 'local-comfortmode-footer'));
     }
 }
