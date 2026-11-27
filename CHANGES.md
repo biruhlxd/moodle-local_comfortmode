@@ -1,5 +1,10 @@
 # Changes
 
+## 1.1.1 (2026-11-28)
+
+- Visitors now find Comfort Mode as a button in the bottom corner of every page, opposite the "?" button. In 1.1.0
+  the link was inside the footer that Boost and its child themes hide behind the "?" button.
+
 ## 1.1.0 (2026-11-26)
 
 - Typeface: Atkinson Hyperlegible for low vision or OpenDyslexic for dyslexia, bundled with the plugin.
